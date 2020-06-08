@@ -6,13 +6,21 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "npm-run-all": "^4.1.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "rimraf": "^3.0.2",
+    "webpack-cli": "^3.3.11"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "prebuild": "rimraf build",
+    "build": "npm-run-all build:*",
+    "build:app": "set INLINE_RUNTIME_CHUNK=false&&react-scripts build",
+    "build:bg": "webpack --mode production ./src/background.js --output ./build/background.js",
+    "build:cg": "webpack --mode production ./src/content.js --output ./build/content.js",
+    "build:in": "webpack --mode production ./src/inject.js --output ./build/inject.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
